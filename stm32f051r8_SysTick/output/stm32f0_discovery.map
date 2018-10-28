@@ -1,0 +1,145 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00008000         xr
+RAM              0x20000000         0x00001000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000      0x709
+ *(.vectors)
+ .vectors       0x08000000       0xc0 ./output/startup_ARMCM0.o
+                0x08000000                __Vectors
+                0x080000c0                __Vectors_End = .
+                0x000000c0                __Vectors_Size = (__Vectors_End - __Vectors)
+                0x080000c0                __end__ = .
+ *(.text*)
+ .text          0x080000c0      0x634 ./output/main.o
+                0x080000c0                Led_On
+                0x080000f0                Led_Off
+                0x08000120                Delay
+                0x08000160                Delay_us
+                0x0800019a                Init_TM1637
+                0x08000230                start
+                0x0800027c                stop
+                0x080002c8                Ack
+                0x08000364                WriteByte
+                0x080003f0                Display
+                0x080004a8                Reserved_IRQHandler
+                0x080004ae                NMI_Handler
+                0x080004b4                HardFault_Handler
+                0x080004ba                SVC_Handler
+                0x080004c0                PendSV_Handler
+                0x080004c6                SysTick_Handler
+                0x0800059c                EXTI0_1_IRQHandler
+                0x080005a2                EXTI2_3_IRQHandler
+                0x080005a8                EXTI4_15_IRQHandler
+                0x080005ae                Enable_Clk
+                0x080005e4                Init_Pin
+                0x08000680                Init_SysTick
+                0x080006b4                main
+ .text          0x080006f4        0x4 ./output/startup_ARMCM0.o
+                0x080006f4                Reset_Handler
+ *(.init)
+ *(.fini)
+ *(.rodata*)
+ .rodata        0x080006f8       0x11 ./output/main.o
+                0x080006f8                segmentMap
+ *(.eh_frame*)
+
+.glue_7         0x0800070c        0x0
+ .glue_7        0x0800070c        0x0 linker stubs
+
+.glue_7t        0x0800070c        0x0
+ .glue_7t       0x0800070c        0x0 linker stubs
+
+.vfp11_veneer   0x0800070c        0x0
+ .vfp11_veneer  0x0800070c        0x0 linker stubs
+
+.v4_bx          0x0800070c        0x0
+ .v4_bx         0x0800070c        0x0 linker stubs
+
+.iplt           0x0800070c        0x0
+ .iplt          0x0800070c        0x0 ./output/main.o
+
+.rel.dyn        0x0800070c        0x0
+ .rel.iplt      0x0800070c        0x0 ./output/main.o
+
+.data           0x20000000        0x0
+                0x20000000                __data_start__ = .
+ *(vtable)
+ *(.data*)
+ .data          0x20000000        0x0 ./output/main.o
+ .data          0x20000000        0x0 ./output/startup_ARMCM0.o
+                0x20000000                __data_end__ = .
+
+.igot.plt       0x20000000        0x0
+ .igot.plt      0x20000000        0x0 ./output/main.o
+
+.bss            0x20000000        0x8
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                __bss_start__ = .
+ *(.bss*)
+ .bss           0x20000000        0x8 ./output/main.o
+                0x20000000                ngan
+                0x20000001                tram
+                0x20000002                chuc
+                0x20000003                donvi
+                0x20000004                temp
+ .bss           0x20000008        0x0 ./output/startup_ARMCM0.o
+ *(COMMON)
+                0x20000008                . = ALIGN (0x4)
+                0x20000008                __bss_end__ = .
+
+.heap           0x20000008      0x200
+                0x20000008                __HeapBase = .
+                0x20000008                __end__ = .
+                0x20000008                end = __end__
+ *(.heap*)
+ .heap          0x20000008      0x200 ./output/startup_ARMCM0.o
+                0x20000208                __HeapLimit = .
+
+.stack_dummy    0x20000008      0x100
+ *(.stack*)
+ .stack         0x20000008      0x100 ./output/startup_ARMCM0.o
+                0x20001000                __StackTop = (ORIGIN (RAM) + LENGTH (RAM))
+                0x20000f00                __StackLimit = (__StackTop - SIZEOF (.stack_dummy))
+                [!provide]                PROVIDE (__stack, __StackTop)
+                0x00000001                ASSERT ((__StackLimit >= __HeapLimit), region RAM overflowed with stack)
+LOAD ./output/main.o
+LOAD ./output/startup_ARMCM0.o
+OUTPUT(./output/stm32f0_discovery.elf elf32-littlearm)
+
+.debug_info     0x00000000      0x4ae
+ .debug_info    0x00000000      0x4ae ./output/main.o
+
+.debug_abbrev   0x00000000      0x18b
+ .debug_abbrev  0x00000000      0x18b ./output/main.o
+
+.debug_aranges  0x00000000       0x20
+ .debug_aranges
+                0x00000000       0x20 ./output/main.o
+
+.debug_line     0x00000000      0x157
+ .debug_line    0x00000000      0x157 ./output/main.o
+
+.debug_str      0x00000000      0x2c1
+ .debug_str     0x00000000      0x2c1 ./output/main.o
+                                0x2c6 (size before relaxing)
+
+.comment        0x00000000       0x7e
+ .comment       0x00000000       0x7e ./output/main.o
+                                 0x7f (size before relaxing)
+
+.ARM.attributes
+                0x00000000       0x2f
+ .ARM.attributes
+                0x00000000       0x31 ./output/main.o
+ .ARM.attributes
+                0x00000031       0x1b ./output/startup_ARMCM0.o
+
+.debug_frame    0x00000000      0x2b0
+ .debug_frame   0x00000000      0x2b0 ./output/main.o

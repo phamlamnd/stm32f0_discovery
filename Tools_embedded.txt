@@ -1,0 +1,11 @@
+Msys2 		https://www.msys2.org/
+Makefile      	https://www.gnu.org/software/make/manual/html_node/index.html#Top
+GCC compiler    	https://developer.arm.com/open-source/gnu-toolchain/gnu-rm
+Ozone          	https://www.segger.com/products/development-tools/ozone-j-link-debugger/
+Git             	https://git-scm.com/
+Source Tree     	https://www.sourcetreeapp.com/
+
+pacman -Syu	//cap nhat msys2
+pacman -S make 	//cai dat make
+make -version	//kiem tra version cua make
+pacman -S git 	//cai dat git
