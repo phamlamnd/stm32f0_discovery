@@ -56,7 +56,7 @@ void delay(unsigned int timeout)
     unsigned int t1, t2;
     for (t1 = 0; t1 < timeout; t1++)
     {
-        for (t2 = 0; t2 < 0xFFF; t2++)
+        for (t2 = 0; t2 < 0xFF; t2++)
         {
           asm(" nop");
         }

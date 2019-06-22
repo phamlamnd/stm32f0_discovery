@@ -108,8 +108,8 @@ OUTPUT(./output/stm32f0_discovery_gpio.elf elf32-littlearm)
 .debug_line     0x00000000       0xa1
  .debug_line    0x00000000       0xa1 ./output/main.o
 
-.debug_str      0x00000000      0x18b
- .debug_str     0x00000000      0x18b ./output/main.o
+.debug_str      0x00000000      0x180
+ .debug_str     0x00000000      0x180 ./output/main.o
 
 .comment        0x00000000       0x7e
  .comment       0x00000000       0x7e ./output/main.o

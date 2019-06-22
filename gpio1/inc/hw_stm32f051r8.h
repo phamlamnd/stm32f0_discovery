@@ -13,7 +13,8 @@
 #define GPIOC_MODER_ALT		0x02u
 #define GPIOC_BSRR			(BASE_ADDR_GPIOC + 0x18u)
 
-#define LD3_PIN				9
+#define LD3_PIN 		9		//PC9
+#define LD4_PIN 		8		//PC8
 
 /*RCC-CLOCK*/
 #define BASE_ADDR_RCC		0x40021000u

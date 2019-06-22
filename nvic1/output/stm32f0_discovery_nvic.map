@@ -111,8 +111,8 @@ OUTPUT(./output/stm32f0_discovery_nvic.elf elf32-littlearm)
 .debug_line     0x00000000       0xbd
  .debug_line    0x00000000       0xbd ./output/main.o
 
-.debug_str      0x00000000      0x1a4
- .debug_str     0x00000000      0x1a4 ./output/main.o
+.debug_str      0x00000000      0x199
+ .debug_str     0x00000000      0x199 ./output/main.o
 
 .comment        0x00000000       0x7e
  .comment       0x00000000       0x7e ./output/main.o
