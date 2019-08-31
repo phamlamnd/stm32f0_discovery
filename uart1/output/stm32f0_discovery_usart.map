@@ -190,20 +190,20 @@ OUTPUT(./output/stm32f0_discovery_usart.elf elf32-littlearm)
  .debug_line    0x000002ee       0x75 ./output/systick.o
  .debug_line    0x00000363       0x6f ./output/usart.o
 
-.debug_str      0x00000000      0x4e0
- .debug_str     0x00000000      0x14f ./output/clock.o
- .debug_str     0x0000014f       0x7b ./output/gpio.o
-                                0x12e (size before relaxing)
- .debug_str     0x000001ca      0x1af ./output/interrupt.o
-                                0x2b2 (size before relaxing)
- .debug_str     0x00000379       0x12 ./output/main.o
-                                 0xdb (size before relaxing)
- .debug_str     0x0000038b       0x79 ./output/tm1637.o
-                                0x1ce (size before relaxing)
- .debug_str     0x00000404       0x87 ./output/systick.o
-                                0x13a (size before relaxing)
- .debug_str     0x0000048b       0x55 ./output/usart.o
-                                0x133 (size before relaxing)
+.debug_str      0x00000000      0x4d5
+ .debug_str     0x00000000      0x144 ./output/clock.o
+ .debug_str     0x00000144       0x7b ./output/gpio.o
+                                0x123 (size before relaxing)
+ .debug_str     0x000001bf      0x1af ./output/interrupt.o
+                                0x2a7 (size before relaxing)
+ .debug_str     0x0000036e       0x12 ./output/main.o
+                                 0xd0 (size before relaxing)
+ .debug_str     0x00000380       0x79 ./output/tm1637.o
+                                0x1c3 (size before relaxing)
+ .debug_str     0x000003f9       0x87 ./output/systick.o
+                                0x12f (size before relaxing)
+ .debug_str     0x00000480       0x55 ./output/usart.o
+                                0x128 (size before relaxing)
 
 .comment        0x00000000       0x7e
  .comment       0x00000000       0x7e ./output/clock.o
