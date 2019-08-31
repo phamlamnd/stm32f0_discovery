@@ -1,7 +1,26 @@
 #include "gpio_driver.h"
 
-void GPIO_DRV_Init(void)
+void GPIO_DRV_PinInit(GPIO_TypeDef* const gpio,
+                      const gpio_config_t* const config)
 {
+    if(gpio == NULL){
+        return;
+    }
+    /* Get pin number */
+    uint32_t pin_number = config->pin;
+    /* Config input/output mode */
+    REG_BIT_CLEAR32(&(gpio->MODER), (GPIO_MODER_MODER_MASK << (GPIO_MODER_MODER_WITH * pin_number)));
+    REG_WRITE32(&(gpio->MODER), (config->mode << (GPIO_MODER_MODER_WITH * pin_number)));
+    /* Config output type push pull / open drain */
+    REG_BIT_CLEAR32(&(gpio->OTYPER), (GPIO_OTYPER_OT_MASK << pin_number));
+    REG_WRITE32(&(gpio->OTYPER), (config->type << (GPIO_OTYPER_OT_WITH * pin_number)));
+    
+    REG_BIT_CLEAR32(&(gpio->OSPEEDR), GPIO_OSPEEDR_OSPEEDR_MASK << (GPIO_OSPEEDR_OSPEEDR_WITH * pin_number));
+    REG_WRITE32(&(gpio->OSPEEDR), (config->speed << (GPIO_OSPEEDR_OSPEEDR_WITH * pin_number)));
+    
+    REG_BIT_CLEAR32(&(gpio->PUPDR), GPIO_PUPDR_PUPDR_MASK << (GPIO_PUPDR_PUPDR_WITH * pin_number));
+    REG_WRITE32(&(gpio->PUPDR), (config->pull << (GPIO_PUPDR_PUPDR_WITH * pin_number)));
+    
     /*Set LD3(PC9), MODER: output mode(01),OTYPER: push-pull(0), open-drain(1)*/
     GPIOC->MODER &= ~(0x03<<18);
     GPIOC->MODER |= 0x01<<18;

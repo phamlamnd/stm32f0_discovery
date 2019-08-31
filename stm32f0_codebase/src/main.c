@@ -17,10 +17,17 @@ void main(void)
     unsigned char tram = 0;
     unsigned char chuc = 0; 
     unsigned char ngan = 0;
+    gpio_config_t config1 = {
+        .pin    = 8,
+        .mode   = GPIO_MODE_OUTPUT,
+        .type   = GPIO_OUTPUT_PUSH_PULL,
+        .speed  = GPIO_OUTPUT_SPEED_LOW,
+        .pull   = GPIO_PULL_DOWN_MODE
+    };
     CLOCK_DRV_Init();
     CLOCK_DRV_Config();
     CLOCK_DRV_Enable();
-    GPIO_DRV_Init();
+    GPIO_DRV_PinInit(GPIOA, &config1);
     TM1637_DRV_Config(TM1637_CLOCK_MODE, config);
     while(1)
     {
