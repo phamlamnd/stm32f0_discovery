@@ -7,19 +7,25 @@
 
 void main(void)
 {
-    unsigned int donvi = 0;
-    unsigned int chuc = 0;
-    unsigned int tram = 0;
-    unsigned int ngan = 0;
+    tm1637_digit_t config = {
+        .digit1 = 0,
+        .digit2 = 0,
+        .digit3 = 0,
+        .digit4 = 0,
+    };
+    unsigned char donvi = 0;
+    unsigned char tram = 0;
+    unsigned char chuc = 0; 
+    unsigned char ngan = 0;
     CLOCK_DRV_Init();
     CLOCK_DRV_Config();
     CLOCK_DRV_Enable();
     GPIO_DRV_Init();
-    TM1637_DRV_Init();
+    TM1637_DRV_Config(TM1637_CLOCK_MODE, config);
     while(1)
     {
-        TM1637_DRV_Display(ngan, tram, chuc, donvi);
-        delay(0x2);
+        TM1637_DRV_Display(config);
+        delay(0x5);
 
         donvi++;
         if(donvi == 10)
@@ -41,8 +47,11 @@ void main(void)
         {
             ngan = 0;
         }
-
-        TM1637_DRV_Display(ngan, tram, chuc, donvi);
-        delay(0x2);
+        config.digit1 = donvi;
+        config.digit2 = chuc;
+        config.digit3 = tram;
+        config.digit4 = ngan;
+        TM1637_DRV_Display(config);
+        delay(0x5);
     }
 }

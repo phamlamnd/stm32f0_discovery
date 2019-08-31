@@ -2,7 +2,7 @@
 #define UART_DRIVER_H
 #include "hw_stm32f051r8.h"
 
-void UART_DRV_Init(void);
+void UART_DRV_Init();
 char UART_DRV_SendByte(unsigned char data_input);
 void UART_DRV_SendString(unsigned char *str_data);
 

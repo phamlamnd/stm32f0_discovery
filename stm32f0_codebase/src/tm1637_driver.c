@@ -65,7 +65,7 @@ static void I2C_WrByte(unsigned char oneByte) // write a byte
     }
 }
 
-void TM1637_DRV_Init(void)	//CLK:PB8, DIO:PB9
+void TM1637_DRV_Config(tm1637_display_mode_t mode, tm1637_digit_t start)	//CLK:PB8, DIO:PB9
 {
     RCC->AHBENR |= 0x01<<18;	//Enable clock GPIOB
     GPIOB->MODER &= ~(0x03<<16);
@@ -82,8 +82,7 @@ void TM1637_DRV_Init(void)	//CLK:PB8, DIO:PB9
 static unsigned int dot = 1;
 static const char segmentMap[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f}; // 0-9
 
-void TM1637_DRV_Display(unsigned char digit4, unsigned char digit3,
-                        unsigned char digit2, unsigned char digit1)
+void TM1637_DRV_Display(const tm1637_digit_t digit)
 {
     unsigned int num = 5673;
     I2C_Start();
@@ -95,23 +94,23 @@ void TM1637_DRV_Display(unsigned char digit4, unsigned char digit3,
     I2C_WrByte(0xc0); // Set the first address
     I2C_Ask();
 
-    I2C_WrByte(segmentMap[digit4]); // Send data
+    I2C_WrByte(segmentMap[digit.digit4]); // Send data
     I2C_Ask();
     if(dot == 1)
     {
-        I2C_WrByte(segmentMap[digit3] | 0x80);
+        I2C_WrByte(segmentMap[digit.digit3] | 0x80);
         dot = 0;
     }
     else
     {
-        I2C_WrByte(segmentMap[digit3]);
+        I2C_WrByte(segmentMap[digit.digit3]);
         dot = 0;
     }
 
     I2C_Ask();
-    I2C_WrByte(segmentMap[digit2]);
+    I2C_WrByte(segmentMap[digit.digit2]);
     I2C_Ask();
-    I2C_WrByte(segmentMap[digit1]);
+    I2C_WrByte(segmentMap[digit.digit1]);
     I2C_Ask();
     I2C_Stop();
 
