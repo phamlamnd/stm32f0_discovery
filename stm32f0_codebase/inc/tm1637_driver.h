@@ -2,7 +2,6 @@
 #define TM1637_DRIVER_H
 
 #include "hw_stm32f051r8.h"
-#include "gpio_driver.h"
 
 typedef enum
 {
@@ -18,10 +17,7 @@ typedef struct
     unsigned char digit4;       /* Display number 0-9 */
 } tm1637_digit_t;
 
-void TM1637_DRV_Config(tm1637_display_mode_t mode, tm1637_digit_t start);
-void TM1637_DRV_Display(tm1637_digit_t digit);
-void TM1637_DRV_Start();
-void TM1637_DRV_Stop();
-
+void TM1637_DRV_Config();
+void TM1637_DRV_Display(tm1637_display_mode_t mode, tm1637_digit_t digit);
 
 #endif /* TM1637_DRIVER_H */

@@ -7,58 +7,53 @@
 
 void main(void)
 {
-    tm1637_digit_t config = {
+    tm1637_digit_t digits = {
         .digit1 = 0,
         .digit2 = 0,
         .digit3 = 0,
         .digit4 = 0,
     };
-    unsigned char donvi = 0;
-    unsigned char tram = 0;
-    unsigned char chuc = 0; 
-    unsigned char ngan = 0;
-    gpio_config_t config1 = {
+    gpio_config_t led4_config = {
         .pin    = 8,
         .mode   = GPIO_MODE_OUTPUT,
         .type   = GPIO_OUTPUT_PUSH_PULL,
         .speed  = GPIO_OUTPUT_SPEED_LOW,
         .pull   = GPIO_PULL_DOWN_MODE
     };
-    CLOCK_DRV_Init();
-    CLOCK_DRV_Config();
-    CLOCK_DRV_Enable();
-    GPIO_DRV_PinInit(GPIOA, &config1);
-    TM1637_DRV_Config(TM1637_CLOCK_MODE, config);
+    CLOCK_DRV_SystemInit();
+    CLOCK_DRV_Enable(CLOCK_PORTB);
+    CLOCK_DRV_Enable(CLOCK_PORTC);
+    GPIO_DRV_PinInit(GPIOC, &led4_config);
+    TM1637_DRV_Config();
     while(1)
     {
-        TM1637_DRV_Display(config);
-        delay(0x5);
-
-        donvi++;
-        if(donvi == 10)
+        TM1637_DRV_Display(TM1637_COUNTER_MODE, digits);
+        delay(0x30);
+        delay(0x30);
+        digits.digit1++;
+        if(digits.digit1 == 10)
         {
-            donvi = 0;
-            chuc = chuc+1;
+            digits.digit1 = 0;
+            digits.digit2++;
         }
-        if(chuc == 10)
+        if(digits.digit2 == 6)
         {
-            chuc = 0;
-            tram = tram+1;
+            digits.digit2 = 0;
+            digits.digit3++;
         }
-        if(tram == 10)
+        if(digits.digit3 == 10)
         {
-            tram = 0;
-            ngan = ngan+1;
+            digits.digit3 = 0;
+            digits.digit4++;
         }
-        if(ngan == 10)
+        if(digits.digit3 == 3 && digits.digit4 == 1)
         {
-            ngan = 0;
+            digits.digit3 = 0;
+            digits.digit4 = 0;
         }
-        config.digit1 = donvi;
-        config.digit2 = chuc;
-        config.digit3 = tram;
-        config.digit4 = ngan;
-        TM1637_DRV_Display(config);
-        delay(0x5);
+        GPIO_DRV_TogglePin(GPIOC, PIN8);
+        TM1637_DRV_Display(TM1637_CLOCK_MODE, digits);
+        delay(0x30);
+        delay(0x30);
     }
 }

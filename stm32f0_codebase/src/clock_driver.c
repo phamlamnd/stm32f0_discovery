@@ -1,6 +1,6 @@
 #include "clock_driver.h"
 
-void CLOCK_DRV_Init(void)
+void CLOCK_DRV_SystemInit(void)
 {
     /*Set HSION bit*/
     RCC->CR |= (unsigned int)0x00000001U;
@@ -36,14 +36,22 @@ void CLOCK_DRV_Config()
     RCC->CFGR3 |= USART1_SOURCE_PCLK;
 }
 
-void CLOCK_DRV_Enable(void)
+void CLOCK_DRV_Enable(pripheral_clock_t clock)
 {
-    /*Enable clock GPIOA*/
-    RCC->AHBENR |= 0x01<<17;
-    /*Enable clock GPIOC*/
-    RCC->AHBENR |= 0x01<<19;
-    /*Enable clock UART1*/
-    RCC->APB2ENR |= 0x01<<14;
+    switch(clock)
+    {
+        case CLOCK_PORTA:
+            REG_BIT_SET32(&(RCC->AHBENR), RCC_AHBENR_IOPAEN(1));
+            break;
+        case CLOCK_PORTB:
+            REG_BIT_SET32(&(RCC->AHBENR), RCC_AHBENR_IOPBEN(1));
+            break;
+        case CLOCK_PORTC:
+            REG_BIT_SET32(&(RCC->AHBENR), RCC_AHBENR_IOPCEN(1));
+            break;
+        default:
+            break;
+    }
 }
 
 void delay(unsigned int timeout)
