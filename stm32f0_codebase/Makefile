@@ -19,7 +19,8 @@ FILE_TO_LINK	:= $(OUTPUT_PATH)/main.o \
 				   $(OUTPUT_PATH)/gpio_driver.o \
 				   $(OUTPUT_PATH)/systick_driver.o \
 				   $(OUTPUT_PATH)/uart_driver.o \
-				   $(OUTPUT_PATH)/tm1637_driver.o
+				   $(OUTPUT_PATH)/tm1637_driver.o \
+				   $(OUTPUT_PATH)/adc_driver.o
 
 CC_OPT			:= -march=armv6-m -mcpu=cortex-m0 -c -O0 -g -mthumb -I$(INC_DIR)
 ASM_OPT			:= -march=armv6-m -mcpu=cortex-m0 -c -mthumb
@@ -59,6 +60,9 @@ $(OUTPUT_PATH)/tm1637_driver.o: $(SRC_DIR)/tm1637_driver.c
 	@echo "compile $(SRC_DIR)/tm1637_driver.c file"
 	$(CC) $(CC_OPT) $(SRC_DIR)/tm1637_driver.c -o $(OUTPUT_PATH)/tm1637_driver.o
 
+$(OUTPUT_PATH)/adc_driver.o: $(SRC_DIR)/adc_driver.c
+	@echo "compile $(SRC_DIR)/adc_driver.c file"
+	$(CC) $(CC_OPT) $(SRC_DIR)/adc_driver.c -o $(OUTPUT_PATH)/adc_driver.o
 
 build: $(FILE_TO_LINK) $(LINKER_FILE)
 	@echo "link object files to create new binary image ($(PROJ_NAME).elf)"

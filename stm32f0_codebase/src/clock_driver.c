@@ -49,6 +49,8 @@ void CLOCK_DRV_Enable(pripheral_clock_t clock)
         case CLOCK_PORTC:
             REG_BIT_SET32(&(RCC->AHBENR), RCC_AHBENR_IOPCEN(1));
             break;
+        case CLOCK_ADC:
+            REG_BIT_SET32(&(RCC->APB2ENR), RCC_APB2ENR_ADCEN(1));
         default:
             break;
     }

@@ -10,6 +10,7 @@ typedef enum
     CLOCK_PORTC     = 2u,
     CLOCK_PORTD     = 3u,
     CLOCK_PORTE     = 4u,
+    CLOCK_ADC       = 5u
 } pripheral_clock_t;
 
 

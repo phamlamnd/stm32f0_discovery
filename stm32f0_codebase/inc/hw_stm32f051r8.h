@@ -37,6 +37,67 @@ typedef unsigned int    uint32_t;
 
 typedef struct
 {
+    __IO uint32_t ISR;                  /*!< Interrupt and status register */
+    __IO uint32_t IER;                  /*!< Interrupt enable register */
+    __IO uint32_t CR;                   /*!< Control register */
+    __IO uint32_t CFGR1;                /*!< Configuration register 1 */
+    __IO uint32_t CFGR2;                /*!< Configuration register 2 */
+    __IO uint32_t SMPR;                 /*!< Sampling time register */
+         uint32_t RESERVED0[2];
+    __IO uint32_t TR;                   /*!< Watchdog threshold register */
+         uint32_t RESERVED1[1];
+    __IO uint32_t CHSELR;               /*!< Channel selection register */
+         uint32_t RESERVED2[5];          
+    __I  uint32_t DR;                   /*!< Data register */
+         uint32_t RESERVED3[177]; 
+    __IO uint32_t CCR;                  /*!< Common configuration register */
+} ADC_Type;
+
+#define ADC_BASE                        (uint32_t)0x40012400u
+#define ADC                             ((ADC_Type*)(ADC_BASE))
+#define ADC_BASE_PTRS                   ADC
+
+#define ADC_CR_ADEN_MASK                0x1u
+#define ADC_CR_ADEN_SHIFT               0u
+#define ADC_CR_ADEN(x)                  (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADEN_SHIFT))&ADC_CR_ADEN_MASK)
+#define ADC_CR_ADDIS_MASK               0x2u
+#define ADC_CR_ADDIS_SHIFT              1u
+#define ADC_CR_ADDIS(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADDIS_SHIFT))&ADC_CR_ADDIS_MASK)
+#define ADC_CR_ADSTART_MASK             0x4u
+#define ADC_CR_ADSTART_SHIFT            2u
+#define ADC_CR_ADSTART(x)               (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADSTART_SHIFT))&ADC_CR_ADSTART_MASK)
+#define ADC_CR_ADSTP_MASK               0x10u
+#define ADC_CR_ADSTP_SHIFT              4u
+#define ADC_CR_ADSTP(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADSTP_SHIFT))&ADC_CR_ADSTP_MASK)
+#define ADC_CR_ADCAL_MASK               0x80000000u
+#define ADC_CR_ADCAL_SHIFT              31u
+#define ADC_CR_ADCAL(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADCAL_SHIFT))&ADC_CR_ADCAL_MASK)
+
+#define ADC_CFGR1_DMAEN_MASK            0x1u
+#define ADC_CFGR1_DMAEN_SHIFT           0u
+#define ADC_CFGR1_DMAEN(x)              (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_DMAEN_SHIFT))&ADC_CFGR1_DMAEN_MASK)
+#define ADC_CFGR1_RES_MASK              0x18u
+#define ADC_CFGR1_RES_SHIFT             3u
+#define ADC_CFGR1_RES(x)                (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_RES_SHIFT))&ADC_CFGR1_RES_MASK)
+#define ADC_CFGR1_ALIGN_MASK            0x20u
+#define ADC_CFGR1_ALIGN_SHIFT           5u
+#define ADC_CFGR1_ALIGN(x)              (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_ALIGN_SHIFT))&ADC_CFGR1_ALIGN_MASK)
+#define ADC_CFGR1_EXTEN_MASK            0xC00u
+#define ADC_CFGR1_EXTEN_SHIFT           10u
+#define ADC_CFGR1_EXTEN(x)              (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_EXTEN_SHIFT))&ADC_CFGR1_EXTEN_MASK)
+#define ADC_CFGR1_OVRMOD_MASK           0x1000u
+#define ADC_CFGR1_OVRMOD_SHIFT          12u
+#define ADC_CFGR1_OVRMOD(x)             (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_OVRMOD_SHIFT))&ADC_CFGR1_OVRMOD_MASK)
+#define ADC_CFGR1_CONT_MASK             0x2000u
+#define ADC_CFGR1_CONT_SHIFT            13u
+#define ADC_CFGR1_CONT(x)               (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_CONT_SHIFT))&ADC_CFGR1_CONT_MASK)
+
+#define ADC_CFGR1_DR_MASK               0xFFFFu
+#define ADC_CFGR1_DR_SHIFT              0u
+#define ADC_CFGR1_DR(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_DR_SHIFT))&ADC_CFGR1_DR_MASK)
+
+typedef struct
+{
     __IO uint32_t MODER;                /*!< GPIO port mode register */
     __IO uint32_t OTYPER;               /*!< GPIO port output type register */
     __IO uint32_t OSPEEDR;              /*!< GPIO port output speed register */
@@ -108,6 +169,10 @@ typedef struct
 #define RCC_AHBENR_IOPCEN_SHIFT     19u
 #define RCC_AHBENR_IOPCEN(x)        (((uint32_t)(((uint32_t)(x))<<RCC_AHBENR_IOPCEN_SHIFT))&RCC_AHBENR_IOPCEN_MASK)
 
+#define RCC_APB2ENR_ADCEN_MASK      0x200u
+#define RCC_APB2ENR_ADCEN_SHIFT     9u
+#define RCC_APB2ENR_ADCEN(x)        (((uint32_t)(((uint32_t)(x))<<RCC_APB2ENR_ADCEN_SHIFT))&RCC_APB2ENR_ADCEN_MASK)
+
 #define HCLK_NODIV              0x0
 #define HCLK_DIV2               0x4
 #define HCLK_DIV4               0x5
@@ -130,7 +195,7 @@ typedef struct
 typedef struct
 {
     __IO uint32_t ISER;             /*!< Interrupt Set-enable Register */
-         uint32_t RESERVED0[31]; 
+         uint32_t RESERVED0[31];
     __IO uint32_t ICER;             /*!< Interrupt Clear-enable Register */
          uint32_t RESERVED1[31];
     __IO uint32_t ISPR;             /*!< Interrupt Set-pending Register */
