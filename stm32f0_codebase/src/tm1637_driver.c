@@ -90,6 +90,7 @@ void TM1637_DRV_Config()	//CLK:PB8, DIO:PB9
         .speed  = GPIO_OUTPUT_SPEED_LOW,
         .pull   = GPIO_PULL_DOWN_MODE
     };
+    CLOCK_DRV_Enable(CLOCK_PORTB);
     GPIO_DRV_PinInit(GPIOB, &clk_pin_config);
     GPIO_DRV_PinInit(GPIOB, &dio_pin_config);
     CLOCK_DRV_Enable(CLOCK_PORTB);

@@ -20,9 +20,16 @@ void main(void)
         .speed  = GPIO_OUTPUT_SPEED_LOW,
         .pull   = GPIO_PULL_DOWN_MODE
     };
+    gpio_config_t led3_config = {
+        .pin    = 9,
+        .mode   = GPIO_MODE_OUTPUT,
+        .type   = GPIO_OUTPUT_PUSH_PULL,
+        .speed  = GPIO_OUTPUT_SPEED_LOW,
+        .pull   = GPIO_PULL_DOWN_MODE
+    };
     CLOCK_DRV_SystemInit();
-    CLOCK_DRV_Enable(CLOCK_PORTB);
     CLOCK_DRV_Enable(CLOCK_PORTC);
+    GPIO_DRV_PinInit(GPIOC, &led3_config);
     GPIO_DRV_PinInit(GPIOC, &led4_config);
     TM1637_DRV_Config();
     while(1)
@@ -52,6 +59,7 @@ void main(void)
             digits.digit4 = 0;
         }
         GPIO_DRV_TogglePin(GPIOC, PIN8);
+        GPIO_DRV_TogglePin(GPIOC, PIN9);
         TM1637_DRV_Display(TM1637_CLOCK_MODE, digits);
         delay(0x30);
         delay(0x30);
