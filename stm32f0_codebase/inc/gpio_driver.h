@@ -26,8 +26,9 @@ typedef enum
 
 typedef enum
 {
-    GPIO_PULL_UP_MODE           = 0U,       /*!< GPIO Pull-up Mode */
-    GPIO_PULL_DOWN_MODE         = 1U        /*!< GPIO Pull-down Mode */
+    GPIO_PULL_NO                = 0u,        /*!< GPIO no pull-up, no pull-down */
+    GPIO_PULL_UP_MODE           = 1U,       /*!< GPIO Pull-up Mode */
+    GPIO_PULL_DOWN_MODE         = 2U        /*!< GPIO Pull-down Mode */
 } gpio_pull_mode_t;
 
 typedef struct

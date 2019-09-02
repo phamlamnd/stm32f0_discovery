@@ -15,6 +15,14 @@ int main(void)
         .speed  = GPIO_OUTPUT_SPEED_LOW,
         .pull   = GPIO_PULL_DOWN_MODE
     };
+    gpio_config_t analog_pin_config0 = {
+        .pin    = 0,
+        .mode   = GPIO_MODE_ANALOG,
+        .type   = GPIO_OUTPUT_PUSH_PULL,
+        .speed  = GPIO_OUTPUT_SPEED_LOW,
+        .pull   = GPIO_PULL_NO
+    };
+    
     adc_cov_config_t conv_config0 = {
         .convMode   = ADC_CONTINUOUS_CONV_MODE,
         .resolution = ADC_DATA_RESOLUTION_12BITS,  
@@ -26,18 +34,26 @@ int main(void)
         .scan       = ADC_SCAN_BACKWARD,
     };
     
+    tm1637_digit_t digits = {
+        .digit1 = 1,
+        .digit2 = 0,
+        .digit3 = 0,
+        .digit4 = 0
+    };
+    
     CLOCK_DRV_SystemInit();
+    CLOCK_DRV_Enable(CLOCK_PORTA);
     CLOCK_DRV_Enable(CLOCK_PORTC);
     CLOCK_DRV_Enable(CLOCK_ADC);
     GPIO_DRV_PinInit(GPIOC, &led4_config0);
-    
+    GPIO_DRV_PinInit(GPIOA, &analog_pin_config0);
+    TM1637_DRV_Config();
     ADC_DRV_DoCalibaration();
     ADC_DRV_EnableModule();
     ADC_DRV_ConfigConverter(&conv_config0);
-    ADC_DRV_EnableChannel(16);
-    ADC_DRV_EnableChannel(17);
-    ADC_DRV_EnableChannel(18);
+    ADC_DRV_EnableChannel(0);
     ADC_DRV_StartConversion();
+    
     while(1)
     {
         
@@ -46,8 +62,14 @@ int main(void)
         {
             uint16_t result = ADC_DRV_GetConversionResult();
             ADC_DRV_ClearStatusFlags(ADC_ISR_EOC_MASK);
+            digits.digit1++;
+            if(digits.digit1 == 10)
+            {
+                digits.digit1 = 0;
+            }
         }
+        TM1637_DRV_Display(TM1637_COUNTER_MODE, digits);
         GPIO_DRV_TogglePin(GPIOC, PIN8);
-        delay(0x10);
+        delay(0x30);
     }
 }

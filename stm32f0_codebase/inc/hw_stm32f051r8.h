@@ -59,7 +59,7 @@ typedef struct
     __IO uint32_t CCR;                  /*!< Common configuration register */
 } ADC_Type;
 
-#define ADC_BASE                        (uint32_t)0x40012400u
+#define ADC_BASE                        (0x40012400u)
 #define ADC                             ((ADC_Type*)(ADC_BASE))
 #define ADC_BASE_PTRS                   ADC
 
@@ -149,12 +149,12 @@ typedef struct
 } GPIO_Type;
 
 /*=======================GPIO=======================*/
-#define GPIOA_BASE  (uint32_t)0x48000000U
-#define GPIOB_BASE  (uint32_t)0x48000400U
-#define GPIOC_BASE  (uint32_t)0x48000800U
-#define GPIOD_BASE  (uint32_t)0x48000C00U
-#define GPIOE_BASE  (uint32_t)0x48001000U
-#define GPIOF_BASE  (uint32_t)0x48001400U
+#define GPIOA_BASE  (0x48000000u)
+#define GPIOB_BASE  (0x48000400u)
+#define GPIOC_BASE  (0x48000800u)
+#define GPIOD_BASE  (0x48000C00u)
+#define GPIOE_BASE  (0x48001000u)
+#define GPIOF_BASE  (0x48001400u)
 #define GPIOA       ((GPIO_Type*)GPIOA_BASE)
 #define GPIOB       ((GPIO_Type*)GPIOB_BASE)
 #define GPIOC       ((GPIO_Type*)GPIOC_BASE)
@@ -193,7 +193,7 @@ typedef struct
     __IO uint32_t CR2;      /*!< Clock control register 2 */
 } RCC_Type;
 
-#define RCC_BASE            (uint32_t)0x40021000U
+#define RCC_BASE            (0x40021000u)
 #define RCC                 ((RCC_Type*)RCC_BASE)
 
 #define RCC_AHBENR_IOPAEN_MASK      0x20000u
@@ -242,7 +242,7 @@ typedef struct
     __IO uint32_t IPR[8];           /*!< Interrupt Priority Registers */
 } NVIC_Type;
 
-#define NVIC_BASE           (uint32_t)0xE000E100U
+#define NVIC_BASE           (0xE000E100u)
 #define NVIC                ((NVIC_TypeDef*)NVIC_BASE)
 
 typedef struct
@@ -253,7 +253,7 @@ typedef struct
     __IO uint32_t CFGR2;            /*!< SYSCFG configuration register 2 */
 } SYSCFG_Type;
 
-#define SYSCFG_BASE         (uint32_t)0x40010000U
+#define SYSCFG_BASE         (0x40010000u)
 #define SYSCFG              ((SYSCFG_Type*)SYSCFG_BASE)
 
 typedef struct
@@ -267,7 +267,7 @@ typedef struct
 } EXTI_Type;
 
 /*=======================EXTI=======================*/
-#define EXTI_BASE           (uint32_t)0x40010400U
+#define EXTI_BASE           (0x40010400u)
 #define EXTI                ((EXTI_Type*)EXTI_BASE)
 
 typedef struct
@@ -278,7 +278,7 @@ typedef struct
     __IO uint32_t CALIB;    /*!< RO, SysTick Calibration Value Register */
 } STK_Type;
 /*=======================SYSTICK====================*/
-#define STK_BASE            (uint32_t)0xE000E010U
+#define STK_BASE            (0xE000E010u)
 #define STK                 ((STK_Type*)STK_BASE)
 
 
@@ -297,14 +297,38 @@ typedef struct
     __IO uint32_t TDR;      /*!< Transmit data register */
 } USART_Type;
 /*========================USART=====================*/
-#define USART1_BASE             (uint32_t)0x40013800U
-#define USART2_BASE             (uint32_t)0x40004400U
+#define USART1_BASE             (0x40013800u)
+#define USART2_BASE             (0x40004400u)
 #define USART1                  ((USART_Type*)USART1_BASE)
 #define USART2                  ((USART_Type*)USART2_BASE)
 #define USART1_SOURCE_PCLK      0x0
 #define USART1_SOURCE_SYSCLK    0x1
 #define USART1_SOURCE_LSE       0x2
 #define USART1_SOURCE_HSI       0x3
+
+
+typedef struct
+{
+    __IO uint32_t CR1;                  /*!< TIM14 control register 1 */
+         uint32_t RESERVED0[1];        
+    __IO uint32_t DIER;                 /*!< TIM14 interrupt enable register */
+    __IO uint32_t SR;                   /*!< TIM14 status register */
+    __IO uint32_t EGR;                  /*!< TIM14 event generation register */
+    __IO uint32_t CCMR1;                /*!< TIM14 capture/compare mode register 1 */
+         uint32_t RESERVED1[1];
+    __IO uint32_t CCER;                 /*!< TIM14 capture/compare enable register */
+    __IO uint32_t CNT;                  /*!< TIM14 counter */
+    __IO uint32_t PSC;                  /*!< TIM14 prescaler */
+    __IO uint32_t ARR;                  /*!< TIM14 auto-reload register */
+         uint32_t RESERVED2[1];
+    __IO uint32_t CCR1;                 /*!< TIM14 capture/compare register 1 */
+         uint32_t RESERVED3[6];
+    __IO uint32_t OR;                   /*!< TIM14 option register */
+    
+} TIM14_Type;
+
+#define TIM14_BASE              (0x40002000)
+#define TIM14                   ((TIM14_Type*)TIM14_BASE)
 
 
 #endif /* STM32F051R8_H */
