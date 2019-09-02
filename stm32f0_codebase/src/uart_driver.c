@@ -23,13 +23,13 @@ void UART_DRV_Init(void)
     USART1->CR1 |= 0x01<<3;
 }
 
-char UART_DRV_SendByte(unsigned char data_input)
+char UART_DRV_SendByte(uint8_t data_input)
 {
     /*check TXE: Transmit data register empty*/
     char state = 0;
     if(USART1->ISR & (0x01<<7))
     {
-        USART1->TDR = (unsigned int)data_input;
+        USART1->TDR = (uint32_t)data_input;
     }
     else
     {
@@ -38,7 +38,7 @@ char UART_DRV_SendByte(unsigned char data_input)
     return state;
 }
 
-void UART_DRV_SendString(unsigned char *str_data)
+void UART_DRV_SendString(uint8_t *str_data)
 {
     while(*str_data)
     {

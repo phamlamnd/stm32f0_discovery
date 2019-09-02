@@ -3,6 +3,12 @@
 typedef unsigned char   uint8_t;
 typedef unsigned short  uint16_t;
 typedef unsigned int    uint32_t;
+typedef enum
+{
+    STATUS_SUCCESS = 0u,
+    STATUS_ERROR   = 1u
+} status_t;
+
 #define     __I     volatile const       /*!< Defines 'read only' permissions */
 #define     __O     volatile             /*!< Defines 'write only' permissions */
 #define     __IO    volatile             /*!< Defines 'read / write' permissions */
@@ -57,6 +63,9 @@ typedef struct
 #define ADC                             ((ADC_Type*)(ADC_BASE))
 #define ADC_BASE_PTRS                   ADC
 
+#define ADC_ISR_ADRDY_MASK              0x1u
+#define ADC_ISR_ADRDY_SHIFT             0u
+#define ADC_ISR_ADRDY(x)                (((uint32_t)(((uint32_t)(x))<<ADC_ISR_ADRDY_SHIFT))&ADC_ISR_ADRDY_MASK)
 #define ADC_CR_ADEN_MASK                0x1u
 #define ADC_CR_ADEN_SHIFT               0u
 #define ADC_CR_ADEN(x)                  (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADEN_SHIFT))&ADC_CR_ADEN_MASK)
@@ -72,10 +81,12 @@ typedef struct
 #define ADC_CR_ADCAL_MASK               0x80000000u
 #define ADC_CR_ADCAL_SHIFT              31u
 #define ADC_CR_ADCAL(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_CR_ADCAL_SHIFT))&ADC_CR_ADCAL_MASK)
-
 #define ADC_CFGR1_DMAEN_MASK            0x1u
 #define ADC_CFGR1_DMAEN_SHIFT           0u
 #define ADC_CFGR1_DMAEN(x)              (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_DMAEN_SHIFT))&ADC_CFGR1_DMAEN_MASK)
+#define ADC_CFGR1_SCANDIR_MASK          0x4u
+#define ADC_CFGR1_SCANDIR_SHIFT         2u
+#define ADC_CFGR1_SCANDIR(x)            (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_SCANDIR_SHIFT))&ADC_CFGR1_SCANDIR_MASK)
 #define ADC_CFGR1_RES_MASK              0x18u
 #define ADC_CFGR1_RES_SHIFT             3u
 #define ADC_CFGR1_RES(x)                (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_RES_SHIFT))&ADC_CFGR1_RES_MASK)
@@ -91,10 +102,15 @@ typedef struct
 #define ADC_CFGR1_CONT_MASK             0x2000u
 #define ADC_CFGR1_CONT_SHIFT            13u
 #define ADC_CFGR1_CONT(x)               (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_CONT_SHIFT))&ADC_CFGR1_CONT_MASK)
-
-#define ADC_CFGR1_DR_MASK               0xFFFFu
-#define ADC_CFGR1_DR_SHIFT              0u
-#define ADC_CFGR1_DR(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_CFGR1_DR_SHIFT))&ADC_CFGR1_DR_MASK)
+#define ADC_CFGR2_CKMODE_MASK           0xC0000000u
+#define ADC_CFGR2_CKMODE_SHIFT          30u
+#define ADC_CFGR2_CKMODE(x)             (((uint32_t)(((uint32_t)(x))<<ADC_CFGR2_CKMODE_SHIFT))&ADC_CFGR2_CKMODE_MASK)
+#define ADC_SMPR_SMP_MASK               0x7u
+#define ADC_SMPR_SMP_SHIFT              0u
+#define ADC_SMPR_SMP(x)                 (((uint32_t)(((uint32_t)(x))<<ADC_SMPR_SMP_SHIFT))&ADC_SMPR_SMP_MASK)
+#define ADC_DR_DATA_MASK                0xFFFFu
+#define ADC_DR_DATA_SHIFT               0u
+#define ADC_DR_DATA(x)                  (((uint32_t)(((uint32_t)(x))<<ADC_DR_DATA_SHIFT))&ADC_DR_DATA_MASK)
 
 typedef struct
 {
@@ -109,7 +125,7 @@ typedef struct
     __IO uint32_t AFRL;                 /*!< GPIO alternate function low register */
     __IO uint32_t AFRH;                 /*!< GPIO alternate function high register */
     __IO uint32_t BRR;                  /*!< GPIO port bit reset register */
-} GPIO_TypeDef;
+} GPIO_Type;
 
 /*=======================GPIO=======================*/
 #define GPIOA_BASE  (uint32_t)0x48000000U
@@ -118,12 +134,12 @@ typedef struct
 #define GPIOD_BASE  (uint32_t)0x48000C00U
 #define GPIOE_BASE  (uint32_t)0x48001000U
 #define GPIOF_BASE  (uint32_t)0x48001400U
-#define GPIOA       ((GPIO_TypeDef*)GPIOA_BASE)
-#define GPIOB       ((GPIO_TypeDef*)GPIOB_BASE)
-#define GPIOC       ((GPIO_TypeDef*)GPIOC_BASE)
-#define GPIOD       ((GPIO_TypeDef*)GPIOD_BASE)
-#define GPIOE       ((GPIO_TypeDef*)GPIOE_BASE)
-#define GPIOF       ((GPIO_TypeDef*)GPIOF_BASE)
+#define GPIOA       ((GPIO_Type*)GPIOA_BASE)
+#define GPIOB       ((GPIO_Type*)GPIOB_BASE)
+#define GPIOC       ((GPIO_Type*)GPIOC_BASE)
+#define GPIOD       ((GPIO_Type*)GPIOD_BASE)
+#define GPIOE       ((GPIO_Type*)GPIOE_BASE)
+#define GPIOF       ((GPIO_Type*)GPIOF_BASE)
 
 #define GPIO_MODER_MODER_MASK       0x3u
 #define GPIO_MODER_MODER_WITH       2u
@@ -154,10 +170,10 @@ typedef struct
     __IO uint32_t CFGR2;    /*!< Clock configuration register2 */
     __IO uint32_t CFGR3;    /*!< Clock configuration register3 */
     __IO uint32_t CR2;      /*!< Clock control register 2 */
-} RCC_TypeDef;
+} RCC_Type;
 
 #define RCC_BASE            (uint32_t)0x40021000U
-#define RCC                 ((RCC_TypeDef*)RCC_BASE)
+#define RCC                 ((RCC_Type*)RCC_BASE)
 
 #define RCC_AHBENR_IOPAEN_MASK      0x20000u
 #define RCC_AHBENR_IOPAEN_SHIFT     17u
@@ -203,7 +219,7 @@ typedef struct
     __IO uint32_t ICPR;             /*!< Interrupt Clear-pending Register */
          uint32_t RESERVED3[95];
     __IO uint32_t IPR[8];           /*!< Interrupt Priority Registers */
-} NVIC_TypeDef;
+} NVIC_Type;
 
 #define NVIC_BASE           (uint32_t)0xE000E100U
 #define NVIC                ((NVIC_TypeDef*)NVIC_BASE)
@@ -214,10 +230,10 @@ typedef struct
          uint32_t RESERVED0[1];
     __IO uint32_t EXTICR[4];        /*!< SYSCFG external interrupt configuration register 1-4 */
     __IO uint32_t CFGR2;            /*!< SYSCFG configuration register 2 */
-} SYSCFG_TypeDef;
+} SYSCFG_Type;
 
 #define SYSCFG_BASE         (uint32_t)0x40010000U
-#define SYSCFG              ((SYSCFG_TypeDef*)SYSCFG_BASE)
+#define SYSCFG              ((SYSCFG_Type*)SYSCFG_BASE)
 
 typedef struct
 {
@@ -227,11 +243,11 @@ typedef struct
     __IO uint32_t FTSR;     /*!< Falling trigger selection register */
     __IO uint32_t SWIER;    /*!< Software interrupt event register */
     __IO uint32_t PR;       /*!< Pending register */
-} EXTI_TypeDef;
+} EXTI_Type;
 
 /*=======================EXTI=======================*/
 #define EXTI_BASE           (uint32_t)0x40010400U
-#define EXTI                ((EXTI_TypeDef*)EXTI_BASE)
+#define EXTI                ((EXTI_Type*)EXTI_BASE)
 
 typedef struct
 {
@@ -239,10 +255,10 @@ typedef struct
     __IO uint32_t RVR;      /*!< RW, SysTick Reload Value Register */
     __IO uint32_t CVR;      /*!< RW, SysTick Current Value Register */
     __IO uint32_t CALIB;    /*!< RO, SysTick Calibration Value Register */
-} STK_TypeDef;
+} STK_Type;
 /*=======================SYSTICK====================*/
 #define STK_BASE            (uint32_t)0xE000E010U
-#define STK                 ((STK_TypeDef*)STK_BASE)
+#define STK                 ((STK_Type*)STK_BASE)
 
 
 typedef struct
@@ -258,12 +274,12 @@ typedef struct
     __IO uint32_t ICR;      /*!< Interrupt flag clear register */
     __IO uint32_t RDR;      /*!< Receive data register */
     __IO uint32_t TDR;      /*!< Transmit data register */
-} USART_TypeDef;
+} USART_Type;
 /*========================USART=====================*/
 #define USART1_BASE             (uint32_t)0x40013800U
 #define USART2_BASE             (uint32_t)0x40004400U
-#define USART1                  ((USART_TypeDef*)USART1_BASE)
-#define USART2                  ((USART_TypeDef*)USART2_BASE)
+#define USART1                  ((USART_Type*)USART1_BASE)
+#define USART2                  ((USART_Type*)USART2_BASE)
 #define USART1_SOURCE_PCLK      0x0
 #define USART1_SOURCE_SYSCLK    0x1
 #define USART1_SOURCE_LSE       0x2

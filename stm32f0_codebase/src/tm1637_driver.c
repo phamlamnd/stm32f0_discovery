@@ -2,9 +2,9 @@
 #include "gpio_driver.h"
 #include "clock_driver.h"
 
-static void delay_us(unsigned char us)
+static void delay_us(uint8_t us)
 {
-    unsigned char i;
+    uint8_t i;
     for(i = 0; i < us; i++)
     {
         asm("nop");
@@ -52,9 +52,9 @@ static void I2C_Stop(void) // 1637 Stop
     GPIO_DRV_ClearPin(GPIOB, PIN9); //DIO = 1
 }
 
-static void I2C_WrByte(unsigned char oneByte) // write a byte
+static void I2C_WrByte(uint8_t oneByte) // write a byte
 {
-    unsigned char i;
+    uint8_t i;
     for (i = 0; i <8; i++)
     {
         GPIO_DRV_ClearPin(GPIOB, PIN8);   //CLK = 0
@@ -98,10 +98,9 @@ void TM1637_DRV_Config()	//CLK:PB8, DIO:PB9
     GPIO_DRV_ClearPin(GPIOB, PIN9);
 }
 
-static const char segmentMap[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f}; // 0-9
+static const uint8_t segmentMap[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f}; // 0-9
 void TM1637_DRV_Display(tm1637_display_mode_t mode, tm1637_digit_t digit)
 {
-    unsigned int num = 5673;
     I2C_Start();
     I2C_WrByte(0x40); //40H address is automatically incremented by 1 mode, 44H fixed address mode
     I2C_Ask();

@@ -39,9 +39,9 @@ typedef struct
     gpio_pull_mode_t     pull;              /*!< GPIO Pull mode */
 } gpio_config_t;
 
-void GPIO_DRV_PinInit(GPIO_TypeDef* const gpio, const gpio_config_t* const config);
-void GPIO_DRV_SetPin(GPIO_TypeDef* const gpio, const uint32_t pin);
-void GPIO_DRV_ClearPin(GPIO_TypeDef* const gpio, const uint32_t pin);
-void GPIO_DRV_TogglePin(GPIO_TypeDef* const gpio, const uint32_t pin);
+void GPIO_DRV_PinInit(GPIO_Type* const gpio, const gpio_config_t* const config);
+void GPIO_DRV_SetPin(GPIO_Type* const gpio, const uint32_t pin);
+void GPIO_DRV_ClearPin(GPIO_Type* const gpio, const uint32_t pin);
+void GPIO_DRV_TogglePin(GPIO_Type* const gpio, const uint32_t pin);
 
 #endif /*GPIO_DRIVER_H*/

@@ -1,6 +1,6 @@
 #include "gpio_driver.h"
 
-void GPIO_DRV_PinInit(GPIO_TypeDef* const gpio, const gpio_config_t* const config)
+void GPIO_DRV_PinInit(GPIO_Type* const gpio, const gpio_config_t* const config)
 {
     uint32_t pin_number = config->pin;
     if(config->mode == GPIO_MODE_INPUT)
@@ -26,17 +26,17 @@ void GPIO_DRV_PinInit(GPIO_TypeDef* const gpio, const gpio_config_t* const confi
     }
 }
 
-void GPIO_DRV_SetPin(GPIO_TypeDef* const gpio, const uint32_t pin)
+void GPIO_DRV_SetPin(GPIO_Type* const gpio, const uint32_t pin)
 {
     REG_BIT_SET32(&(gpio->ODR), (1U << pin));
 }
 
-void GPIO_DRV_ClearPin(GPIO_TypeDef* const gpio, const uint32_t pin)
+void GPIO_DRV_ClearPin(GPIO_Type* const gpio, const uint32_t pin)
 {
     REG_BIT_CLEAR32(&(gpio->ODR), (1U << pin));
 }
 
-void GPIO_DRV_TogglePin(GPIO_TypeDef* const gpio, const uint32_t pin)
+void GPIO_DRV_TogglePin(GPIO_Type* const gpio, const uint32_t pin)
 {
     gpio->ODR ^= (1U << pin);
 }

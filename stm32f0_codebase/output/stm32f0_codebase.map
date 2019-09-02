@@ -14,7 +14,7 @@ RAM              0x20000000         0x00001000         xrw
 Linker script and memory map
 
 
-.text           0x08000000      0xac4
+.text           0x08000000      0xb58
  *(.vectors)
  .vectors       0x08000000       0xc0 ./output/startup_ARMCM0.o
                 0x08000000                __Vectors
@@ -22,81 +22,82 @@ Linker script and memory map
                 0x000000c0                __Vectors_Size = (__Vectors_End - __Vectors)
                 0x080000c0                __end__ = .
  *(.text*)
- .text          0x080000c0       0x98 ./output/main.o
+ .text          0x080000c0       0x6c ./output/main.o
                 0x080000c0                main
- .text          0x08000158        0x4 ./output/startup_ARMCM0.o
-                0x08000158                Reset_Handler
- .text          0x0800015c       0x36 ./output/interrupt_manager.o
-                0x0800015c                Reserved_IRQHandler
-                0x08000162                NMI_Handler
-                0x08000168                HardFault_Handler
-                0x0800016e                SVC_Handler
-                0x08000174                PendSV_Handler
-                0x0800017a                SysTick_Handler
-                0x08000180                EXTI0_1_IRQHandler
-                0x08000186                EXTI2_3_IRQHandler
-                0x0800018c                USART1_IRQHandler
- *fill*         0x08000192        0x2 
- .text          0x08000194      0x17c ./output/clock_driver.o
-                0x08000194                CLOCK_DRV_SystemInit
-                0x0800021c                CLOCK_DRV_Config
-                0x08000258                CLOCK_DRV_Enable
-                0x080002d0                delay
- .text          0x08000310      0x15e ./output/gpio_driver.o
-                0x08000310                GPIO_DRV_PinInit
-                0x08000400                GPIO_DRV_SetPin
-                0x08000424                GPIO_DRV_ClearPin
-                0x0800044a                GPIO_DRV_TogglePin
- *fill*         0x0800046e        0x2 
- .text          0x08000470       0x34 ./output/systick_driver.o
-                0x08000470                systick_init
- .text          0x080004a4      0x110 ./output/uart_driver.o
-                0x080004a4                UART_DRV_Init
-                0x08000540                UART_DRV_SendByte
-                0x08000584                UART_DRV_SendString
- .text          0x080005b4      0x2dc ./output/tm1637_driver.o
-                0x08000760                TM1637_DRV_Config
-                0x080007c4                TM1637_DRV_Display
- .text          0x08000890      0x204 ./output/adc_driver.o
-                0x08000890                ADC_DRV_EnableModule
-                0x080008c0                ADC_DRV_DisableModule
-                0x080008f0                ADC_DRV_EnableChannel
-                0x08000938                ADC_DRV_DisableChannel
-                0x0800096c                ADC_DRV_GetDefaultConfigConverter
-                0x0800099a                ADC_DRV_ConfigConverter
-                0x08000a10                ADC_DRV_StartConversion
-                0x08000a2c                ADC_DRV_StopConversion
-                0x08000a36                ADC_DRV_EnableInterrupt
-                0x08000a46                ADC_DRV_DisableInterrupt
-                0x08000a56                ADC_DRV_GetConversionResult
-                0x08000a78                ADC_DRV_GetStatusFlags
-                0x08000a84                ADC_DRV_ClearStatusFlags
+ .text          0x0800012c        0x4 ./output/startup_ARMCM0.o
+                0x0800012c                Reset_Handler
+ .text          0x08000130       0x36 ./output/interrupt_manager.o
+                0x08000130                Reserved_IRQHandler
+                0x08000136                NMI_Handler
+                0x0800013c                HardFault_Handler
+                0x08000142                SVC_Handler
+                0x08000148                PendSV_Handler
+                0x0800014e                SysTick_Handler
+                0x08000154                EXTI0_1_IRQHandler
+                0x0800015a                EXTI2_3_IRQHandler
+                0x08000160                USART1_IRQHandler
+ *fill*         0x08000166        0x2 
+ .text          0x08000168      0x17c ./output/clock_driver.o
+                0x08000168                CLOCK_DRV_SystemInit
+                0x080001f0                CLOCK_DRV_Config
+                0x0800022c                CLOCK_DRV_Enable
+                0x080002a4                delay
+ .text          0x080002e4      0x15e ./output/gpio_driver.o
+                0x080002e4                GPIO_DRV_PinInit
+                0x080003d4                GPIO_DRV_SetPin
+                0x080003f8                GPIO_DRV_ClearPin
+                0x0800041e                GPIO_DRV_TogglePin
+ *fill*         0x08000442        0x2 
+ .text          0x08000444       0x34 ./output/systick_driver.o
+                0x08000444                systick_init
+ .text          0x08000478      0x110 ./output/uart_driver.o
+                0x08000478                UART_DRV_Init
+                0x08000514                UART_DRV_SendByte
+                0x08000558                UART_DRV_SendString
+ .text          0x08000588      0x2d4 ./output/tm1637_driver.o
+                0x08000734                TM1637_DRV_Config
+                0x08000798                TM1637_DRV_Display
+ .text          0x0800085c      0x2c4 ./output/adc_driver.o
+                0x0800085c                ADC_DRV_EnableModule
+                0x08000890                ADC_DRV_DisableModule
+                0x080008dc                ADC_DRV_EnableChannel
+                0x08000924                ADC_DRV_DisableChannel
+                0x08000958                ADC_DRV_GetDefaultConfigConverter
+                0x08000998                ADC_DRV_ConfigConverter
+                0x08000a4c                ADC_DRV_StartConversion
+                0x08000a68                ADC_DRV_StopConversion
+                0x08000a72                ADC_DRV_EnableInterrupt
+                0x08000a82                ADC_DRV_DisableInterrupt
+                0x08000a92                ADC_DRV_GetConversionResult
+                0x08000ab4                ADC_DRV_GetStatusFlags
+                0x08000ac0                ADC_DRV_ClearStatusFlags
+                0x08000ad0                ADC_DRV_DoCalibaration
  *(.init)
  *(.fini)
  *(.rodata*)
- .rodata        0x08000a94        0x8 ./output/main.o
- .rodata        0x08000a9c       0x22 ./output/tm1637_driver.o
- *fill*         0x08000abe        0x2 
- .rodata        0x08000ac0        0x4 ./output/adc_driver.o
+ .rodata        0x08000b20       0x10 ./output/main.o
+ .rodata        0x08000b30       0x22 ./output/tm1637_driver.o
+ *fill*         0x08000b52        0x2 
+ .rodata        0x08000b54        0x4 ./output/adc_driver.o
  *(.eh_frame*)
 
-.glue_7         0x08000ac4        0x0
- .glue_7        0x08000ac4        0x0 linker stubs
+.glue_7         0x08000b58        0x0
+ .glue_7        0x08000b58        0x0 linker stubs
 
-.glue_7t        0x08000ac4        0x0
- .glue_7t       0x08000ac4        0x0 linker stubs
+.glue_7t        0x08000b58        0x0
+ .glue_7t       0x08000b58        0x0 linker stubs
 
-.vfp11_veneer   0x08000ac4        0x0
- .vfp11_veneer  0x08000ac4        0x0 linker stubs
+.vfp11_veneer   0x08000b58        0x0
+ .vfp11_veneer  0x08000b58        0x0 linker stubs
 
-.v4_bx          0x08000ac4        0x0
- .v4_bx         0x08000ac4        0x0 linker stubs
+.v4_bx          0x08000b58        0x0
+ .v4_bx         0x08000b58        0x0 linker stubs
 
-.iplt           0x08000ac4        0x0
- .iplt          0x08000ac4        0x0 ./output/main.o
+.iplt           0x08000b58        0x0
+ .iplt          0x08000b58        0x0 ./output/main.o
 
-.rel.dyn        0x08000ac4        0x0
- .rel.iplt      0x08000ac4        0x0 ./output/main.o
+.rel.dyn        0x08000b58        0x0
+ .rel.iplt      0x08000b58        0x0 ./output/main.o
 
 .data           0x20000000        0x0
                 0x20000000                __data_start__ = .
@@ -162,25 +163,25 @@ LOAD ./output/tm1637_driver.o
 LOAD ./output/adc_driver.o
 OUTPUT(./output/stm32f0_codebase.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x143f
- .debug_info    0x00000000      0x3f4 ./output/main.o
- .debug_info    0x000003f4       0xea ./output/interrupt_manager.o
- .debug_info    0x000004de      0x1c7 ./output/clock_driver.o
- .debug_info    0x000006a5      0x2cf ./output/gpio_driver.o
- .debug_info    0x00000974      0x15b ./output/systick_driver.o
- .debug_info    0x00000acf      0x161 ./output/uart_driver.o
- .debug_info    0x00000c30      0x3b9 ./output/tm1637_driver.o
- .debug_info    0x00000fe9      0x456 ./output/adc_driver.o
+.debug_info     0x00000000     0x15a9
+ .debug_info    0x00000000      0x43c ./output/main.o
+ .debug_info    0x0000043c       0xea ./output/interrupt_manager.o
+ .debug_info    0x00000526      0x1c7 ./output/clock_driver.o
+ .debug_info    0x000006ed      0x2cf ./output/gpio_driver.o
+ .debug_info    0x000009bc      0x15e ./output/systick_driver.o
+ .debug_info    0x00000b1a      0x173 ./output/uart_driver.o
+ .debug_info    0x00000c8d      0x3af ./output/tm1637_driver.o
+ .debug_info    0x0000103c      0x56d ./output/adc_driver.o
 
-.debug_abbrev   0x00000000      0x6b1
- .debug_abbrev  0x00000000       0xb9 ./output/main.o
- .debug_abbrev  0x000000b9       0x4f ./output/interrupt_manager.o
- .debug_abbrev  0x00000108       0xde ./output/clock_driver.o
- .debug_abbrev  0x000001e6       0xcf ./output/gpio_driver.o
- .debug_abbrev  0x000002b5       0x76 ./output/systick_driver.o
- .debug_abbrev  0x0000032b       0xef ./output/uart_driver.o
- .debug_abbrev  0x0000041a      0x143 ./output/tm1637_driver.o
- .debug_abbrev  0x0000055d      0x154 ./output/adc_driver.o
+.debug_abbrev   0x00000000      0x6ca
+ .debug_abbrev  0x00000000       0xbf ./output/main.o
+ .debug_abbrev  0x000000bf       0x4f ./output/interrupt_manager.o
+ .debug_abbrev  0x0000010e       0xde ./output/clock_driver.o
+ .debug_abbrev  0x000001ec       0xcf ./output/gpio_driver.o
+ .debug_abbrev  0x000002bb       0xa1 ./output/systick_driver.o
+ .debug_abbrev  0x0000035c       0xe0 ./output/uart_driver.o
+ .debug_abbrev  0x0000043c      0x143 ./output/tm1637_driver.o
+ .debug_abbrev  0x0000057f      0x14b ./output/adc_driver.o
 
 .debug_aranges  0x00000000      0x100
  .debug_aranges
@@ -200,33 +201,33 @@ OUTPUT(./output/stm32f0_codebase.elf elf32-littlearm)
  .debug_aranges
                 0x000000e0       0x20 ./output/adc_driver.o
 
-.debug_line     0x00000000      0x55e
- .debug_line    0x00000000       0xeb ./output/main.o
- .debug_line    0x000000eb       0x99 ./output/interrupt_manager.o
- .debug_line    0x00000184       0xb6 ./output/clock_driver.o
- .debug_line    0x0000023a       0x87 ./output/gpio_driver.o
- .debug_line    0x000002c1       0x62 ./output/systick_driver.o
- .debug_line    0x00000323       0x74 ./output/uart_driver.o
- .debug_line    0x00000397      0x116 ./output/tm1637_driver.o
- .debug_line    0x000004ad       0xb1 ./output/adc_driver.o
+.debug_line     0x00000000      0x55f
+ .debug_line    0x00000000       0xbc ./output/main.o
+ .debug_line    0x000000bc       0x99 ./output/interrupt_manager.o
+ .debug_line    0x00000155       0xb6 ./output/clock_driver.o
+ .debug_line    0x0000020b       0x87 ./output/gpio_driver.o
+ .debug_line    0x00000292       0x62 ./output/systick_driver.o
+ .debug_line    0x000002f4       0x74 ./output/uart_driver.o
+ .debug_line    0x00000368      0x115 ./output/tm1637_driver.o
+ .debug_line    0x0000047d       0xe2 ./output/adc_driver.o
 
-.debug_str      0x00000000      0xa1b
- .debug_str     0x00000000      0x526 ./output/main.o
-                                0x533 (size before relaxing)
- .debug_str     0x00000526       0xaf ./output/interrupt_manager.o
+.debug_str      0x00000000      0xc09
+ .debug_str     0x00000000      0x67c ./output/main.o
+                                0x689 (size before relaxing)
+ .debug_str     0x0000067c       0xaf ./output/interrupt_manager.o
                                 0x18b (size before relaxing)
- .debug_str     0x000005d5       0xc5 ./output/clock_driver.o
-                                0x1e8 (size before relaxing)
- .debug_str     0x0000069a       0x6a ./output/gpio_driver.o
-                                0x2d3 (size before relaxing)
- .debug_str     0x00000704       0x36 ./output/systick_driver.o
-                                0x166 (size before relaxing)
- .debug_str     0x0000073a       0x7a ./output/uart_driver.o
-                                0x15c (size before relaxing)
- .debug_str     0x000007b4       0xb7 ./output/tm1637_driver.o
+ .debug_str     0x0000072b       0xbc ./output/clock_driver.o
+                                0x1e5 (size before relaxing)
+ .debug_str     0x000007e7       0x6a ./output/gpio_driver.o
+                                0x2d0 (size before relaxing)
+ .debug_str     0x00000851       0x33 ./output/systick_driver.o
+                                0x160 (size before relaxing)
+ .debug_str     0x00000884       0x7f ./output/uart_driver.o
+                                0x161 (size before relaxing)
+ .debug_str     0x00000903      0x108 ./output/tm1637_driver.o
                                 0x3b5 (size before relaxing)
- .debug_str     0x0000086b      0x1b0 ./output/adc_driver.o
-                                0x4a0 (size before relaxing)
+ .debug_str     0x00000a0b      0x1fe ./output/adc_driver.o
+                                0x69d (size before relaxing)
 
 .comment        0x00000000       0x7e
  .comment       0x00000000       0x7e ./output/main.o
@@ -260,7 +261,7 @@ OUTPUT(./output/stm32f0_codebase.elf elf32-littlearm)
  .ARM.attributes
                 0x00000172       0x31 ./output/adc_driver.o
 
-.debug_frame    0x00000000      0x574
+.debug_frame    0x00000000      0x590
  .debug_frame   0x00000000       0x30 ./output/main.o
  .debug_frame   0x00000030      0x10c ./output/interrupt_manager.o
  .debug_frame   0x0000013c       0x88 ./output/clock_driver.o
@@ -268,4 +269,4 @@ OUTPUT(./output/stm32f0_codebase.elf elf32-littlearm)
  .debug_frame   0x00000254       0x2c ./output/systick_driver.o
  .debug_frame   0x00000280       0x6c ./output/uart_driver.o
  .debug_frame   0x000002ec       0xe8 ./output/tm1637_driver.o
- .debug_frame   0x000003d4      0x1a0 ./output/adc_driver.o
+ .debug_frame   0x000003d4      0x1bc ./output/adc_driver.o
