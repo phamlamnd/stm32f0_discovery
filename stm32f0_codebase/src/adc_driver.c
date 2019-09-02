@@ -34,19 +34,33 @@ void ADC_DRV_DisableModule(void)
 
 void ADC_DRV_EnableChannel(uint32_t channel)
 {
-    /* Wait conversion finish */
     while((base->CR & ADC_CR_ADSTART_MASK) != 0U)
     {
+        /* Wait conversion finish */
     }
     REG_BIT_SET32(&(base->CHSELR), (1U << channel));
-    REG_BIT_SET32(&(base->CCR), (1U << 23));
+    /* Enable internal channel */
+    switch(channel)
+    {
+        case 16: /* temperature sensor */
+            REG_BIT_SET32(&(base->CCR), (1U << 23));
+            break;
+        case 17: /* VREFINT internal voltage reference (bandgap) */
+            REG_BIT_SET32(&(base->CCR), (1U << 22));
+            break;
+        case 18: /* VBAT */
+            REG_BIT_SET32(&(base->CCR), (1U << 24));
+            break;
+        default:
+            break;
+    }
 }
 
 void ADC_DRV_DisableChannel(uint32_t channel)
 {
-    /* Wait conversion finish */
     while((base->CR & ADC_CR_ADSTART_MASK) != 0U)
     {
+        /* Wait conversion finish */
     }
     REG_BIT_CLEAR32(&(base->CR), (1U << channel));
 }
@@ -68,7 +82,19 @@ void ADC_DRV_ConfigConverter(const adc_cov_config_t * const config)
     uint32_t cfgr1 = 0u;
     uint32_t cfgr2 = 0u;
     uint32_t smpr  = 0u;
-    cfgr1 |= ADC_CFGR1_CONT(config->convMode);
+    switch(config->convMode)
+    {
+        case ADC_SINGLE_CONV_MODE:
+            break;
+        case ADC_CONTINUOUS_CONV_MODE:
+            cfgr1 |= ADC_CFGR1_CONT(1U);
+            break;
+        case ADC_DISCONTINUOUS_CONV_MODE:
+            cfgr1 |= ADC_CFGR1_DISCEN(1U);
+            break;
+        default:
+            break;
+    }  
     cfgr1 |= ADC_CFGR1_RES(config->resolution);
     cfgr1 |= ADC_CFGR1_OVRMOD(config->overwrite);
     cfgr1 |= ADC_CFGR1_ALIGN(config->align);
@@ -88,7 +114,7 @@ void ADC_DRV_StartConversion(void)
 
 void ADC_DRV_StopConversion(void)
 {
-    
+    REG_BIT_SET32(&(base->CR), ADC_CR_ADSTP(1U));
 }
 
 void ADC_DRV_EnableInterrupt(uint32_t mask)
@@ -101,7 +127,7 @@ void ADC_DRV_DisableInterrupt(uint32_t mask)
     
 }
 
-uint16_t ADC_DRV_GetConversionResult(uint32_t channel)
+uint16_t ADC_DRV_GetConversionResult(void)
 {
     uint16_t result = (uint16_t)(base->DR & ADC_DR_DATA_MASK);
     return result;
@@ -109,12 +135,14 @@ uint16_t ADC_DRV_GetConversionResult(uint32_t channel)
 
 uint32_t ADC_DRV_GetStatusFlags(void)
 {
-    
+    uint32_t flags = 0U;
+    flags = (base->ISR);
+    return flags;
 }
 
 void ADC_DRV_ClearStatusFlags(uint32_t mask)
 {
-    
+    REG_BIT_SET32(&(base->ISR), mask);
 }
 
 status_t ADC_DRV_DoCalibaration(void)
@@ -134,3 +162,7 @@ status_t ADC_DRV_DoCalibaration(void)
     return ret;
 }
 
+void ADC_DRV_SetTriggerSource(adc_trigger_source_t triggerSource)
+{
+    REG_BIT_SET32(&(base->CR), ADC_CFGR1_EXTSEL(triggerSource));
+}

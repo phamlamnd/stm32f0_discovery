@@ -35,11 +35,19 @@ int main(void)
     ADC_DRV_EnableModule();
     ADC_DRV_ConfigConverter(&conv_config0);
     ADC_DRV_EnableChannel(16);
+    ADC_DRV_EnableChannel(17);
+    ADC_DRV_EnableChannel(18);
     ADC_DRV_StartConversion();
-    
     while(1)
     {
-        GPIO_DRV_TogglePin(GPIOC, PIN8);  
+        
+        uint32_t flags = ADC_DRV_GetStatusFlags();
+        if((flags & ADC_ISR_EOC_MASK) != 0)
+        {
+            uint16_t result = ADC_DRV_GetConversionResult();
+            ADC_DRV_ClearStatusFlags(ADC_ISR_EOC_MASK);
+        }
+        GPIO_DRV_TogglePin(GPIOC, PIN8);
         delay(0x10);
     }
 }

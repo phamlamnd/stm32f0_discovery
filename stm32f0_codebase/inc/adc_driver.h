@@ -18,8 +18,9 @@ typedef enum
 
 typedef enum
 {
-    ADC_SINGLE_CONV_MODE     = 0u,
-    ADC_CONTINUOUS_CONV_MODE = 1u
+    ADC_SINGLE_CONV_MODE        = 0u,
+    ADC_CONTINUOUS_CONV_MODE    = 1u,
+    ADC_DISCONTINUOUS_CONV_MODE = 2u
 } adc_conv_mode_t;
 
 typedef enum
@@ -29,6 +30,15 @@ typedef enum
     ADC_HARDWARE_TRIGGER_FALLING    = 2u,
     ADC_HARDWARE_TRIGGER_BOTH       = 3u
 } adc_trigger_edge_t;
+
+typedef  enum
+{
+    ADC_TRIGGER_SOURCE_TIM1_TRGO    = 0u,
+    ADC_TRIGGER_SOURCE_TIM1_CC4     = 1u,
+    ADC_TRIGGER_SOURCE_TIM2_TRGO    = 2u,
+    ADC_TRIGGER_SOURCE_TIM3_TRGO    = 3u,
+    ADC_TRIGGER_SOURCE_TIM15_TRGO   = 4u,
+} adc_trigger_source_t;
 
 typedef enum
 {
@@ -83,11 +93,11 @@ void ADC_DRV_StartConversion(void);
 void ADC_DRV_StopConversion(void);
 void ADC_DRV_EnableInterrupt(uint32_t mask);
 void ADC_DRV_DisableInterrupt(uint32_t mask);
-uint16_t ADC_DRV_GetConversionResult(uint32_t channel);
+uint16_t ADC_DRV_GetConversionResult(void);
 uint32_t ADC_DRV_GetStatusFlags(void);
 void ADC_DRV_ClearStatusFlags(uint32_t mask);
 status_t ADC_DRV_DoCalibaration(void);
-
+void ADC_DRV_SetTriggerSource(adc_trigger_source_t triggerSource);
 
 
 #endif /* ADC_DRIVER_H */
